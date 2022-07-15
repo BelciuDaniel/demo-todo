@@ -1,7 +1,9 @@
 <script setup>
-import PageContainer from '../components/PageContainer.vue';
+import ToDoList from '../components/ToDoList.vue';
 </script>
 
 <template>
-    <PageContainer title="Home page" />
-</template>
+    <suspense>
+        <ToDoList />
+    </suspense>
+</template> 
