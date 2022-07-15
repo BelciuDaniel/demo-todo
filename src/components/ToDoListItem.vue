@@ -3,15 +3,23 @@ defineProps({
     id: Number,
     title: String,
     completed: Boolean
-})
+});
+
+const emit = defineEmits(['toDoItemDeleted','toDoItemCompleted']);
+
+function handleChange(event){
+  emit('toDoItemCompleted',event.target.checked);
+}
+
+
 </script>
 
 <template>
 <p></p>
   <div class="grid-container">
-  <div class="checkBox"><input type="checkbox" :checked="completed" /></div>  
+  <div class="checkBox"><input type="checkbox" :checked="completed" @change="handleChange"/></div>  
   <div class="title">{{ title }}</div>
-  <div class="deleteButton"><button>Delete</button></div>
+  <div class="deleteButton"><button @click="$emit('toDoItemDeleted')">Delete</button></div>
 </div>
     
 </template>
@@ -45,8 +53,6 @@ defineProps({
     -1px 1px 0 #000,
     1px 1px 0 #000;
 }
-.checkBox{
-    pointer-events:none
-}
+
 
 </style>

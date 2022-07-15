@@ -1,8 +1,32 @@
 <script setup>
 import ToDoListItem from './ToDoListItem.vue';
+import { reactive, Ref,watch } from 'vue';
 const response = await fetch('https://jsonplaceholder.typicode.com/todos');
 const todos = await response.json();
 const nameVar = "def";
+todos.slice(0,10);
+const reactiveTodos = ref(todos);
+
+function handleToDoItemDeleted(toDoItemDeleted){
+    reactiveTodos.value=reactiveTodos.value.filter(item=>item.id!==toDoItemId);
+}
+function handleToDoItemCompleted(){
+     reactiveTodos.value = reactiveTodos.value.map(todo => {
+        if (todo.id === todoItemId) {
+            return {
+                ...todo,
+                completed: completed
+            }
+        } else {
+            return todo;
+        }
+    });
+    counter.updated++;
+}
+const checkbox = ref(true);
+watch(checkbox, newValue => {
+    console.log(`checkbox: ${newValue}`);
+});
 </script>
 
 <template>
@@ -18,6 +42,8 @@ const nameVar = "def";
             :id="todo.id"
             :title="todo.title"
             :completed="todo.completed"
+            @toDo-item-deleted="handleToDoItemDeleted(todo.id)"
+            @to-do-item-completed="completed =>handleToDoItemCompleted(todo.id,completed)"
         />
     </ul>
 </template>
